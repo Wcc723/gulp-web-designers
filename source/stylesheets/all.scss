@@ -1,0 +1,11 @@
+@import 'mixin';
+
+$color: #566473;
+$font-size: 16px;
+
+html,
+body {
+  height: 100%;
+  font-size: $font-size;
+  color: $color;
+}
