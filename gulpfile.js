@@ -1,36 +1,3 @@
-var config = {}
-
-/*
- * CSS, PostCSS, Sass 設定
- */
- config.css = {
-  'postcss': {
-    'output_name': 'all.css',
-    'output_folder': 'css'
-  }
-}
-
-/*
- * 檔案輸出、輸入路徑
- */
-config.paths = {
-  'source': './source/',
-  'sass': './source/stylesheets/',
-  'sass_output': 'stylesheets/',
-  'img': './source/images/',
-  'public': './public/',
-}
-
-/*
- * 免編譯物件 (圖片...etc)
- */
-config.others = [
-  '**/*.jpg',
-  '**/*.png',
-  '**/*.js'
-]
-
-/* ======= 以下是編譯排程 ====== */
 var gulp = require('gulp'),
   webserver = require('gulp-webserver'),
   concat = require('gulp-concat'),
@@ -42,14 +9,15 @@ var gulp = require('gulp'),
   // post css
   postcss = require('gulp-postcss'),
   autoprefixer = require('autoprefixer');
+var config = require('./gulpconfig');
 
 // Sass
 gulp.task('sass', function() {
   gulp.src([config.paths.sass + '**/**.scss'])
     .pipe(plumber())
-    .pipe(sass({outputStyle: 'nested'})
+    .pipe(sass({outputStyle: config.sass.output_style})
     .on('error', sass.logError))
-      .pipe(gulp.dest(config.paths.public + config.paths.sass_output))
+      .pipe(gulp.dest(config.paths.public + config.paths.sass_output));
 });
 watch([config.paths.sass + '**/*.scss'], function() {
   gulp.start('sass');
@@ -60,13 +28,16 @@ gulp.task('css', function () {
   var processors = [
     autoprefixer({browsers: ['last 1 version']})
   ];
-  watch(config.paths.public + config.paths.sass_output + '**/**.css', function(){
-    gulp.src(config.paths.public + config.paths.sass_output + '**/**.css')
-      .pipe(plumber())
-      .pipe(concat(config.css.postcss.output_name))
-      .pipe(postcss(processors))
-      .pipe(gulp.dest(config.paths.public + config.css.postcss.output_folder));
-  });
+  if (config.postcss.enabled){
+    watch(config.paths.public + config.paths.sass_output + '**/**.css', function(){
+      gulp.src(config.paths.public + config.paths.sass_output + '**/**.css')
+        .pipe(plumber())
+        .pipe(concat(config.postcss.output_name))
+        .pipe(postcss(processors))
+        .pipe(gulp.dest(config.paths.public + config.postcss.output_folder));
+    });
+  }
+
 });
 
 // 其它不編譯的物件
@@ -77,7 +48,7 @@ for (var i = 0; i < config.others.length; i++) {
 gulp.task('others', function(){
   return gulp.src(objs)
     .pipe(plumber())
-    .pipe(gulp.dest(config.paths.public))
+    .pipe(gulp.dest(config.paths.public));
 });
 watch(objs, function() {
   gulp.start('others');
@@ -98,13 +69,15 @@ watch(config.paths.source + '**/**.html', function(){
 
 // webserver
 gulp.task('webserver', function() {
-  gulp.src(config.paths.public)
-    .pipe(webserver({
-      livereload: true,
-      open: false,
-      host: '0.0.0.0',
-      port: 10000,
-    }));
+  setTimeout(function(){
+    gulp.src(config.paths.public)
+      .pipe(webserver({
+        livereload: true,
+        open: false,
+        host: '0.0.0.0',
+        port: 10000,
+      }));
+  }, 1000);
 });
 
 gulp.task('default', ['gulp-layout', 'others', 'sass', 'css', 'webserver']);
