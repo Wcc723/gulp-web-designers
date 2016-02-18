@@ -41,9 +41,9 @@ gulp.task('css', function () {
 });
 
 // 其它不編譯的物件
-var objs = [];
+var objs = [config.paths.source + '**/**.*'];
 for (var i = 0; i < config.others.length; i++) {
-  objs.push(config.paths.source + config.others[i]);
+  objs.push('!' + config.paths.source + config.others[i]);
 }
 gulp.task('others', function(){
   return gulp.src(objs)
