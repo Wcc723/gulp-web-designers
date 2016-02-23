@@ -3,6 +3,8 @@ module.exports = {
    * 排除需要編譯的檔案，其餘移至 public
    */
   others: [
+    '**/*.html',
+    '**/*.ejs',
     '**/*.scss',
     '**/*.sass',
     '**/*.css'
