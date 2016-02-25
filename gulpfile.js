@@ -57,6 +57,7 @@ watch(objs, function() {
 // 樣板
 gulp.task('gulp-layout', function() {
   return gulp.src([config.paths.source + '**/*.ejs', config.paths.source + '**/*.html'])
+    .pipe(plumber())
     .pipe(frontMatter())
     .pipe(layout(function(file) {
       return file.frontMatter;
