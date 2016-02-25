@@ -26,7 +26,7 @@ watch([config.paths.sass + '**/*.scss'], function() {
 // postCSS
 gulp.task('css', function () {
   var processors = [
-    autoprefixer({browsers: ['last 1 version']})
+    autoprefixer(config.postcss.autoprefixer)
   ];
   if (config.postcss.enabled){
     watch(config.paths.public + config.paths.sass_output + '**/**.css', function(){
@@ -63,7 +63,7 @@ gulp.task('gulp-layout', function() {
     }))
     .pipe(gulp.dest(config.paths.public));
 });
-watch(config.paths.source + '**/**.html', function(){
+watch([config.paths.source + '**/*.ejs', config.paths.source + '**/*.html'], function(){
   gulp.start('gulp-layout');
 });
 
