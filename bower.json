@@ -1,0 +1,20 @@
+{
+  "name": "gulp-web-designers",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Wcc723 <agito723@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Wcc723/gulp-web-designers",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~v4.0.0-alpha.5"
+  }
+}

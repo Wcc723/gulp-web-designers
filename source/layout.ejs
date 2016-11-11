@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <title><%= title %></title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="//oss.maxcdn.com/semantic-ui/2.1.8/semantic.min.css" media="screen" title="no title" charset="utf-8">
-  <link rel="stylesheet" href="css/all.css" media="screen" title="no title" charset="utf-8">
-  <script src="//code.jquery.com/jquery-2.2.0.min.js" charset="utf-8"></script>
-  <script src="//oss.maxcdn.com/semantic-ui/2.1.8/semantic.min.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="/stylesheets/all.css" media="screen" title="no title" charset="utf-8"> -->
 </head>
 <body>
   <%- include partials/navbar %>
-  <%- contents %>
+  <div class="container my-2">
+    <%- contents %>
+  </div>
   <%- include partials/footer %>
 </body>
 </html>

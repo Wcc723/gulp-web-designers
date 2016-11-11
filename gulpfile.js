@@ -13,31 +13,18 @@ var config = require('./gulpconfig');
 
 // Sass
 gulp.task('sass', function() {
+  var processors = [
+    autoprefixer(config.postcss.autoprefixer)
+  ];
   gulp.src([config.paths.sass + '**/**.scss'])
     .pipe(plumber())
-    .pipe(sass({outputStyle: config.sass.output_style})
+    .pipe(sass(config.sass)
     .on('error', sass.logError))
+    .pipe(postcss(processors))
       .pipe(gulp.dest(config.paths.public + config.paths.sass_output));
 });
 watch([config.paths.sass + '**/*.scss'], function() {
   gulp.start('sass');
-});
-
-// postCSS
-gulp.task('css', function () {
-  var processors = [
-    autoprefixer(config.postcss.autoprefixer)
-  ];
-  if (config.postcss.enabled){
-    watch(config.paths.public + config.paths.sass_output + '**/**.css', function(){
-      gulp.src(config.paths.public + config.paths.sass_output + '**/**.css')
-        .pipe(plumber())
-        .pipe(concat(config.postcss.output_name))
-        .pipe(postcss(processors))
-        .pipe(gulp.dest(config.paths.public + config.postcss.output_folder));
-    });
-  }
-
 });
 
 // 其它不編譯的物件
@@ -81,4 +68,4 @@ gulp.task('webserver', function() {
   }, 1000);
 });
 
-gulp.task('default', ['gulp-layout', 'others', 'sass', 'css', 'webserver']);
+gulp.task('default', ['gulp-layout', 'others', 'sass', 'webserver']);

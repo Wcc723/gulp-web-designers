@@ -1,11 +1,2 @@
-@import 'mixin';
-
-$color: #566473;
-$font-size: 20px;
-
-html,
-body {
-  height: 100%;
-  font-size: $font-size;
-  color: $color;
-}
+@import "helpers/variables";
+@import "bootstrap";

@@ -2,3 +2,5 @@ node_modules
 public
 .DS_Store
 .git
+bower_components
+yarn.lock
